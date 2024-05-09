@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-    <section class="flex flex-col flex-wrap justify-center items-center gap-4">
+    <section class="flex flex-col flex-wrap justify-center items-center gap-4 mb-12">
         <pre>
             <code aria-hidden="true" >
                 ______            __                        
@@ -48,7 +48,7 @@
     
         <section class="columns-xs px-16 w-full">
             @for (post of posts; track $index) {
-            <mat-card (click)="this.openPost(post.link)" role="button">
+            <mat-card (click)="this.openPost(post.link)" role="button" class="my-4 break-inside-avoid-column">
                     <img mat-card-image [src]="post.photo" />
                     @if (post.summary.length !== 0) {
                         <mat-card-content>
@@ -69,5 +69,16 @@
             </button>
         }
     </section>
-    
+    <footer class="fixed w-full bottom-0 flex justify-center items-center gap-4">
+        <p>Made with</p>
+        <img matTooltip="Angular" src="https://angular.io/assets/images/logos/angular/angular.svg" class="h-9 w-9" alt="Angular framework logo" />
+        <p>and</p>
+        <img matTooltip="Angular Material" src="https://angular.io/generated/images/marketing/concept-icons/material.svg" class="h-7 w-7" alt="Angular Material logo" />
+        <p>by</p>
+        <img matTooltip="Voidtrack" src="favicon.png" alt="Voidtrack logo" class="h-8 w-8"/>
+        <p>in 2024</p>
+        <p>|</p>
+        <p>Hosted on</p>
+        <img matTooltip="GitHub" src="assets/github-mark.svg" alt="GitHub logo" class="h-8 w-8" role="button" (click)="openPost('https://github.com/Voidtrack/taglensr')"/>
+    </footer>
 </mat-sidenav-container>

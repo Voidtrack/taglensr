@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { TumblrService } from './services/tumblr.service';
 import { ApiResponse, ParsedPost } from './models/post';
@@ -27,6 +28,7 @@ import { ApiResponse, ParsedPost } from './models/post';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatSliderModule,
+    MatTooltipModule,
     FormsModule,
   ],
   templateUrl: './app.component.html',
@@ -77,7 +79,6 @@ export class AppComponent {
     if (posts.response.length === 0) {
       return;
     }
-    console.log(posts.response);
 
     for (const post of posts.response) {
       // if (post.image_permalink) {
@@ -91,7 +92,7 @@ export class AppComponent {
         this.posts.push(
           new ParsedPost(
             post.post_url,
-            post.photos[0].alt_sizes[3].url,
+            post.photos[0].alt_sizes[2].url,
             summary
           )
         );

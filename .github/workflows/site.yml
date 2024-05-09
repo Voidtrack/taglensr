@@ -25,7 +25,7 @@ jobs:
         run: |
           cd taglensr
           npm install
-          npm run-script build-gh
+          npm run-script build
           cp dist/taglensr/browser/index.html dist/taglensr/browser/404.html
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v4.0.0

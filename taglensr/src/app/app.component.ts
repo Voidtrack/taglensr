@@ -38,6 +38,7 @@ export class AppComponent {
   internalDate = this.selectedDate;
   requestedPosts = 5;
   getVideo = false;
+  pendingSearch = true;
   tag = '';
 
   constructor(private tuServe: TumblrService) {}
@@ -46,12 +47,23 @@ export class AppComponent {
     window.open(url, '_blank');
   }
 
+  resetNav() {
+    this.pendingSearch = true;
+  }
+
+  backInTime() {
+    this.selectedDate = this.internalDate;
+    this.search();
+  }
+
   search() {
     this.tag = this.tag.replace('#', '');
     if (this.tag.length === 0) {
       return;
     }
+    this.posts = [];
     this.loading = true;
+    this.pendingSearch = false;
     this.loadPosts();
   }
 

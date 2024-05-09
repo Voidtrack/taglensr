@@ -1,16 +1,56 @@
 <mat-sidenav-container>
-    <section class="columns-xs px-16">
-        @for (post of posts; track $index) {
-           <mat-card (click)="this.openPost(post.link)" role="button">
-                <img mat-card-image [src]="post.photo" />
-                @if (post.summary.length !== 0) {
-                    <mat-card-content>
-                        <p>{{post.summary}}</p>
-                    </mat-card-content>
-                }
-            </mat-card> 
+    <section class="flex flex-col justify-center items-center gap-4">
+        <section class="flex flex-col justify-center items-center gap-4">
+            <section class="flex justify-center items-center gap-4">
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label>Search tag</mat-label>
+                    <mat-icon matIconPrefix aria-hidden="true" fontIcon="search" />
+                    <input matInput required="true" type="text" placeholder="#cats" [(ngModel)]="tag" [value]="tag">
+                </mat-form-field>
+                <mat-form-field subscriptSizing="dynamic" >
+                    <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate">
+                </mat-form-field>
+                <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo">
+                    <mat-button-toggle [value]="false" aria-label="Get images">
+                        @if (getVideo) {
+                            <mat-icon aria-hidden="true" fontIcon="image"/>
+                        }
+                        Images
+                    </mat-button-toggle>
+                    <mat-button-toggle [value]="true">
+                        @if (!getVideo) {
+                            <mat-icon aria-hidden="true" fontIcon="movie"/>
+                        }
+                        Videos
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </section>
+            <p>Number of posts</p>
+            <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
+                <input matSliderThumb [(ngModel)] = "requestedPosts" [value]="requestedPosts">
+            </mat-slider>
+            <button mat-flat-button color="primary" (click)="search()">
+                <mat-icon aria-hidden="true" fontIcon="search" />
+                Search
+            </button>
+        </section>
+    
+        <section class="columns-xs px-16 w-full">
+            @for (post of posts; track $index) {
+            <mat-card (click)="this.openPost(post.link)" role="button">
+                    <img mat-card-image [src]="post.photo" />
+                    @if (post.summary.length !== 0) {
+                        <mat-card-content>
+                            <p>{{post.summary}}</p>
+                        </mat-card-content>
+                    }
+                </mat-card> 
+            }
+        </section>
+        @if (this.loading) {
+            <mat-spinner/>
+            Going back to {{this.internalDate}} for your posts...
         }
-        
     </section>
     
 </mat-sidenav-container>

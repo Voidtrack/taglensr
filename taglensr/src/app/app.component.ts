@@ -1,21 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
 import { TumblrService } from './services/tumblr.service';
 import { ApiResponse, ParsedPost } from './models/post';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatSidenavContainer, MatCardModule],
+  imports: [
+    RouterOutlet,
+    MatSidenavContainer,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatSliderModule,
+    FormsModule,
+  ],
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   posts: ParsedPost[] = [];
   loading = false;
-  selectedDate = new Date(2019, 7, 10);
-  requestedPosts = 10;
+  selectedDate = new Date().toISOString().split('T')[0];
+  internalDate = this.selectedDate;
+  requestedPosts = 5;
+  getVideo = false;
+  tag = '';
 
   constructor(private tuServe: TumblrService) {}
 
@@ -23,9 +46,17 @@ export class AppComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  private loadPosts(date: Date = this.selectedDate) {
-    console.log(date.getTime());
-    this.tuServe.getTaggedPosts('cats', date).subscribe({
+  search() {
+    this.tag = this.tag.replace('#', '');
+    if (this.tag.length === 0) {
+      return;
+    }
+    this.loading = true;
+    this.loadPosts();
+  }
+
+  loadPosts(date: Date = new Date(this.selectedDate)) {
+    this.tuServe.getTaggedPosts(this.tag, date).subscribe({
       next: this.parsePosts.bind(this),
     });
   }
@@ -61,12 +92,12 @@ export class AppComponent implements OnInit {
     }
     if (this.posts.length < this.requestedPosts) {
       const updatedDate = new Date(posts.response.pop()!.timestamp);
+      this.internalDate = new Date(posts.response.pop()!.timestamp * 1000)
+        .toISOString()
+        .split('T')[0];
       this.loadPosts(updatedDate);
+      return;
     }
-  }
-
-  ngOnInit(): void {
-    this.loading = true;
-    this.loadPosts();
+    this.loading = false;
   }
 }

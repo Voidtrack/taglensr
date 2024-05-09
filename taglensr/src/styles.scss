@@ -34,3 +34,6 @@ html, body, mat-sidenav-container {
   height: 100%; 
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+mat-card {
+  background-color: mat.get-theme-color($taglensr-theme, surface-container-highest) !important
+}

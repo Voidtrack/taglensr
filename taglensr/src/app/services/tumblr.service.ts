@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ApiPost, ApiResponse, ParsedPost } from '../models/post';
+import { ApiResponse } from '../models/post';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TumblrService {
-  posts: ParsedPost[] = [];
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

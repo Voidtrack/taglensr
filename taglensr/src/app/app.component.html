@@ -1,10 +1,13 @@
 <mat-sidenav-container>
-    <section class="flex">
+    <section class="columns-xs px-16">
         @for (post of posts; track $index) {
            <mat-card (click)="this.openPost(post.link)" role="button">
-                <mat-card-content>
-                    <img [src]="post.photos[0]" />
-                </mat-card-content>
+                <img mat-card-image [src]="post.photo" />
+                @if (post.summary.length !== 0) {
+                    <mat-card-content>
+                        <p>{{post.summary}}</p>
+                    </mat-card-content>
+                }
             </mat-card> 
         }
         

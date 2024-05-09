@@ -14,7 +14,6 @@ import { ApiResponse, ParsedPost } from './models/post';
 export class AppComponent implements OnInit {
   posts: ParsedPost[] = [];
   loading = false;
-  img_only = true;
   selectedDate = new Date(2019, 7, 10);
   requestedPosts = 10;
 
@@ -38,18 +37,24 @@ export class AppComponent implements OnInit {
     console.log(posts.response);
 
     for (const post of posts.response) {
-      const parsedPost = new ParsedPost(post.post_url);
       // if (post.image_permalink) {
       //   parsedPost.photos.push(post.image_permalink);
       // } else
+      let summary = post.summary;
+      if (summary.length > 40) {
+        summary = summary.substring(0, 40) + '...';
+      }
       if (post.photos) {
-        for (const photo of post.photos) {
-          parsedPost.photos.push(photo.original_size.url);
-        }
-      } else if (this.img_only) {
+        this.posts.push(
+          new ParsedPost(
+            post.post_url,
+            post.photos[0].alt_sizes[3].url,
+            summary
+          )
+        );
+      } else {
         continue;
       }
-      this.posts.push(parsedPost);
       if (this.posts.length === this.requestedPosts) {
         break;
       }

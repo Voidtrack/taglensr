@@ -1,5 +1,15 @@
 <mat-sidenav-container>
     <section class="flex flex-col flex-wrap justify-center items-center gap-4">
+        <pre>
+            <code aria-hidden="true" >
+                ______            __                        
+                /_  __/___ _____ _/ /   ___  ____  __________
+                 / / / __ `/ __ `/ /   / _ \/ __ \/ ___/ ___/
+                / / / /_/ / /_/ / /___/  __/ / / (__  ) /    
+               /_/  \__,_/\__, /_____/\___/_/ /_/____/_/     
+                         /____/                                             
+            </code>
+        </pre>
         <section class="flex flex-col flex-wrap justify-center items-center gap-4">
             <section class="flex flex-wrap justify-center items-center gap-4">
                 <mat-form-field subscriptSizing="dynamic">
@@ -8,6 +18,7 @@
                     <input matInput required="true" type="text" placeholder="#cats" [(ngModel)]="tag" [value]="tag">
                 </mat-form-field>
                 <mat-form-field subscriptSizing="dynamic" >
+                    <mat-label>Search before</mat-label>
                     <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate">
                 </mat-form-field>
                 <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo">
@@ -27,7 +38,7 @@
             </section>
             <p>Number of posts</p>
             <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
-                <input matSliderThumb [(ngModel)] = "requestedPosts" [value]="requestedPosts">
+                <input matSliderThumb aria-label="Number of posts" [(ngModel)] = "requestedPosts" [value]="requestedPosts">
             </mat-slider>
             <button mat-flat-button color="primary" (click)="search()">
                 <mat-icon aria-hidden="true" fontIcon="search" />

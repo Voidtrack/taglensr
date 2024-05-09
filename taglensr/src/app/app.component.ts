@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+// import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +17,7 @@ import { ApiResponse, ParsedPost } from './models/post';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
+    // RouterOutlet,
     MatSidenavContainer,
     MatCardModule,
     MatInputModule,

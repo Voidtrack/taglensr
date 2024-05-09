@@ -30,3 +30,5 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v4.0.0
         with:
           build_dir: taglensr/dist/taglensr/browser
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

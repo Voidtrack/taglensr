@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiResponse } from '../models/post';
 import { Observable } from 'rxjs';
@@ -14,7 +15,7 @@ export class TumblrService {
     }),
   };
 
-  apiKey = 'OEGKcyy3oESpK4XhQ4pIIXT2QP3V9VjK32RQPpt2xdNIizov7m';
+  apiKey = environment.api_key;
   baseUrl = 'https://api.tumblr.com';
 
   constructor(private httpClient: HttpClient) {}

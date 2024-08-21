@@ -61,7 +61,7 @@
         @if (this.loading) {
             <mat-spinner/>
             <p>Going back to {{this.internalDate}} for your posts...</p>
-            @if (this.requestsMade > 10) {
+            @if (this.requestsMade > (this.REQUEST_LIMIT / 2)) {
                 <p>We've have to go back further than expected</p>
             }
         }

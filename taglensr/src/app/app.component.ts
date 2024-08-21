@@ -34,7 +34,7 @@ import { ApiResponse, ParsedPost } from './models/post';
 })
 export class AppComponent {
   // Specify max requests per post
-  private readonly REQUEST_LIMIT = 12;
+  readonly REQUEST_LIMIT = 12;
 
   private _snackBar = inject(MatSnackBar);
 

@@ -79,6 +79,16 @@ export class AppComponent {
     this.requestsMade += 1;
     this.tuServe.getTaggedPosts(this.tag, date).subscribe({
       next: this.parsePosts.bind(this),
+      error: (e) => {
+        this.resetNav();
+        this.displayErrorSnack(
+          `We got an error from Tumblr's API! Code: ${Number(
+            e.status
+          )}. Please drop us an issue!`
+        );
+        console.error(e);
+        this.loading = false;
+      },
     });
   }
 

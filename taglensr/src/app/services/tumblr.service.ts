@@ -11,7 +11,6 @@ export class TumblrService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'User-Agent': 'TagLensr/0.1',
     }),
   };
 

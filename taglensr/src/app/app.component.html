@@ -60,7 +60,10 @@
         </section>
         @if (this.loading) {
             <mat-spinner/>
-            Going back to {{this.internalDate}} for your posts...
+            <p>Going back to {{this.internalDate}} for your posts...</p>
+            @if (this.requestsMade > 10) {
+                <p>We've have to go back further than expected</p>
+            }
         }
         @if (!this.loading && !this.pendingSearch) {
             <button mat-flat-button color="primary" (click)="backInTime()">

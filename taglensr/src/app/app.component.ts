@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +18,6 @@ import { ApiResponse, ParsedPost } from './models/post';
   selector: 'app-root',
   standalone: true,
   imports: [
-    // RouterOutlet,
     MatSidenavContainer,
     MatCardModule,
     MatInputModule,
@@ -34,6 +33,11 @@ import { ApiResponse, ParsedPost } from './models/post';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
+  // Specify max requests per post
+  private readonly REQUEST_LIMIT = 12;
+
+  private _snackBar = inject(MatSnackBar);
+
   posts: ParsedPost[] = [];
   loading = false;
   selectedDate = new Date().toISOString().split('T')[0];
@@ -42,6 +46,7 @@ export class AppComponent {
   getVideo = false;
   pendingSearch = true;
   tag = '';
+  requestsMade = 0;
 
   constructor(private tuServe: TumblrService) {}
 
@@ -66,13 +71,19 @@ export class AppComponent {
     this.posts = [];
     this.loading = true;
     this.pendingSearch = false;
+    this.requestsMade = 0;
     this.loadPosts();
   }
 
   loadPosts(date: Date = new Date(this.selectedDate)) {
+    this.requestsMade += 1;
     this.tuServe.getTaggedPosts(this.tag, date).subscribe({
       next: this.parsePosts.bind(this),
     });
+  }
+
+  private displayErrorSnack(errorText: string) {
+    this._snackBar.open(`⚠️ ${errorText}`, 'Dismiss');
   }
 
   private parsePosts(posts: ApiResponse) {
@@ -108,8 +119,14 @@ export class AppComponent {
       this.internalDate = new Date(posts.response.pop()!.timestamp * 1000)
         .toISOString()
         .split('T')[0];
-      this.loadPosts(updatedDate);
-      return;
+      if (this.requestsMade < this.REQUEST_LIMIT * this.requestedPosts) {
+        this.loadPosts(updatedDate);
+        return;
+      }
+      this.displayErrorSnack(
+        "We had to stop the search because it required too many requests. Please don't retry your search and drop us an issue!"
+      );
+      this.resetNav();
     }
     this.loading = false;
   }

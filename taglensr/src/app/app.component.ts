@@ -161,7 +161,7 @@ export class AppComponent {
         return;
       }
       this.displayErrorSnack(
-        "We had to stop the search because it required too many requests. Please don't retry your search and drop us an issue!"
+        "We had to stop the search because it used too many requests. Please drop us an issue and don't try again!"
       );
       this.resetNav();
     }

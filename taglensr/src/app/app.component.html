@@ -14,7 +14,7 @@
    /_/  \__,_/\__, /_____/\___/_/ /_/____/_/     
              /____/</code>
             </pre>
-        <h1 class="text-xl">A simple, advanced search application for Tumblr tags</h1>
+        <h1 class="text-xl">A small, advanced search page for Tumblr tags -- Peer into tag history!</h1>
         <section class="flex flex-col flex-wrap justify-center items-center gap-5">
             <section class="flex flex-wrap justify-center items-center gap-4">
                 <mat-form-field subscriptSizing="dynamic">
@@ -68,8 +68,8 @@
         @if (this.loading) {
             <mat-spinner/>
             <p>Going back to {{this.internalDate}} for your posts...</p>
-            @if (this.requestsMade > (this.REQUEST_LIMIT / 2)) {
-                <p>We've have to go back further than expected</p>
+            @if (this.requestsMade > ((this.REQUEST_LIMIT * this.requestedPosts) / 2)) {
+                <p>We're going back further than expected</p>
             }
         }
         @if (!this.loading && !this.pendingSearch) {

@@ -19,13 +19,19 @@ export class TumblrService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getTaggedPosts(tag: string, date: Date): Observable<ApiResponse> {
+  getTaggedPosts(
+    tag: string,
+    date: Date,
+    html: boolean = false
+  ): Observable<ApiResponse> {
     const timestamp =
       date.getTime() > 9999999999
         ? Math.floor(date.getTime() / 1000)
         : date.getTime();
     return this.httpClient.get<ApiResponse>(
-      `${this.baseUrl}/v2/tagged?api_key=${this.apiKey}&tag=${tag}&before=${timestamp}&filter=text`
+      `${this.baseUrl}/v2/tagged?api_key=${
+        this.apiKey
+      }&tag=${tag}&before=${timestamp}${!html ? '&filter=text' : ''}`
     );
   }
 }

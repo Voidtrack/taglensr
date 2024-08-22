@@ -26,9 +26,14 @@ export interface ApiPost {
   summary: string;
   timestamp: number;
   image_permalink: string | undefined;
+  body: string | undefined;
   photos: ApiPostPhotos[] | undefined;
 }
 
 export interface ApiResponse {
   response: ApiPost[];
+}
+
+export interface ApiTumblrVideoMetadata {
+  poster: ApiPostPhoto[];
 }

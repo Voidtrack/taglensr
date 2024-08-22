@@ -1,16 +1,21 @@
 <mat-sidenav-container>
+    <header class="w-full flex justify-center items-center gap-4">
+        <p>🔍⏳😕</p>
+        <p>Tumblr has a known bug in their API that prevents some posts from being shown</p>
+        <a href="https://github.com/tumblr/docs/issues/136" target="_blank">GitHub issue</a>
+    </header>
     <section class="flex flex-col flex-wrap justify-center items-center gap-4 mb-12">
         <pre>
-            <code aria-hidden="true" >
-                ______            __                        
-                /_  __/___ _____ _/ /   ___  ____  __________
-                 / / / __ `/ __ `/ /   / _ \/ __ \/ ___/ ___/
-                / / / /_/ / /_/ / /___/  __/ / / (__  ) /    
-               /_/  \__,_/\__, /_____/\___/_/ /_/____/_/     
-                         /____/                                             
-            </code>
-        </pre>
-        <section class="flex flex-col flex-wrap justify-center items-center gap-4">
+<code aria-hidden="true" >
+     ______            __                        
+    /_  __/___ _____ _/ /   ___  ____  __________
+     / / / __ `/ __ `/ /   / _ \/ __ \/ ___/ ___/
+    / / / /_/ / /_/ / /___/  __/ / / (__  ) /    
+   /_/  \__,_/\__, /_____/\___/_/ /_/____/_/     
+             /____/</code>
+            </pre>
+        <h1 class="text-xl">A simple, advanced search application for Tumblr tags</h1>
+        <section class="flex flex-col flex-wrap justify-center items-center gap-5">
             <section class="flex flex-wrap justify-center items-center gap-4">
                 <mat-form-field subscriptSizing="dynamic">
                     <mat-label>Search tag</mat-label>
@@ -21,29 +26,31 @@
                     <mat-label>Search before</mat-label>
                     <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate" (input)="resetNav()">
                 </mat-form-field>
-                <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo" (input)="resetNav()">
-                    <mat-button-toggle [value]="false" aria-label="Get images">
-                        @if (getVideo) {
-                            <mat-icon aria-hidden="true" fontIcon="image"/>
-                        }
-                        Images
-                    </mat-button-toggle>
-                    <mat-button-toggle [value]="true">
-                        @if (!getVideo) {
-                            <mat-icon aria-hidden="true" fontIcon="movie"/>
-                        }
-                        Videos
-                    </mat-button-toggle>
-                </mat-button-toggle-group>
             </section>
-            <p>Number of posts</p>
-            <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
-                <input matSliderThumb aria-label="Number of posts" [(ngModel)] = "requestedPosts" [value]="requestedPosts" (input)="resetNav()">
-            </mat-slider>
-            <button mat-flat-button color="primary" (click)="search()">
-                <mat-icon aria-hidden="true" fontIcon="search" />
-                Search
-            </button>
+            <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo" (input)="resetNav()">
+                <mat-button-toggle [value]="false" aria-label="Get images">
+                    @if (getVideo) {
+                        <mat-icon aria-hidden="true" fontIcon="image"/>
+                    }
+                    Images
+                </mat-button-toggle>
+                <mat-button-toggle [value]="true">
+                    @if (!getVideo) {
+                        <mat-icon aria-hidden="true" fontIcon="movie"/>
+                    }
+                    Videos
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+            <section class="flex flex-col flex-wrap justify-center items-center gap-4">
+                <p>Number of posts</p>
+                <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
+                    <input matSliderThumb aria-label="Number of posts" [(ngModel)] = "requestedPosts" [value]="requestedPosts" (input)="resetNav()">
+                </mat-slider>
+                <button mat-flat-button color="primary" (click)="search()">
+                    <mat-icon aria-hidden="true" fontIcon="search" />
+                    Search
+                </button>
+            </section>
         </section>
     
         <section class="columns-xs px-16 w-full">

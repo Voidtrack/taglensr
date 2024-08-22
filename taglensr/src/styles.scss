@@ -36,3 +36,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 mat-card, footer {
   background-color: mat.get-theme-color($taglensr-theme, surface-container-highest) !important
 }
+
+header {
+  background-color: mat.get-theme-color($taglensr-theme, secondary-container) !important
+}
+
+a {
+  all: revert
+}

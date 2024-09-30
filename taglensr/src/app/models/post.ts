@@ -10,30 +10,31 @@ export class ParsedPost {
   }
 }
 
-export interface ApiPostPhoto {
+export interface ApiPostMedia {
   url: string;
   width: number;
   height: number;
 }
 
-export interface ApiPostPhotos {
-  original_size: ApiPostPhoto;
-  alt_sizes: ApiPostPhoto[];
+export interface VideoMeta {
+  id: string;
+}
+
+export interface ApiPostContent {
+  type: string;
+  provider: string | undefined;
+  media: ApiPostMedia[] | undefined;
+  metadata: VideoMeta | undefined;
+  poster: ApiPostMedia[] | undefined;
 }
 
 export interface ApiPost {
   post_url: string;
   summary: string;
   timestamp: number;
-  image_permalink: string | undefined;
-  body: string | undefined;
-  photos: ApiPostPhotos[] | undefined;
+  content: ApiPostContent[];
 }
 
 export interface ApiResponse {
   response: ApiPost[];
-}
-
-export interface ApiTumblrVideoMetadata {
-  poster: ApiPostPhoto[];
 }

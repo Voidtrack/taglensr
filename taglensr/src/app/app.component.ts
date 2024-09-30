@@ -1,18 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatSidenavContainer } from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ApiResponse, ParsedPost } from './models/post';
 import { TumblrService } from './services/tumblr.service';
-import { ApiResponse, ApiTumblrVideoMetadata, ParsedPost } from './models/post';
 
 @Component({
   selector: 'app-root',
@@ -35,8 +35,6 @@ import { ApiResponse, ApiTumblrVideoMetadata, ParsedPost } from './models/post';
 export class AppComponent {
   // Specify max requests per post
   readonly REQUEST_LIMIT = 12;
-  readonly YOUTUBE_REGEX = /(?<=youtube\.com\/embed\/).{11}/;
-  readonly TUMBLR_REGEX = /(?<=npf='){.*}/;
 
   private _snackBar = inject(MatSnackBar);
 
@@ -79,7 +77,7 @@ export class AppComponent {
 
   loadPosts(date: Date = new Date(this.selectedDate)) {
     this.requestsMade += 1;
-    this.tuServe.getTaggedPosts(this.tag, date, this.getVideo).subscribe({
+    this.tuServe.getTaggedPosts(this.tag, date).subscribe({
       next: this.parsePosts.bind(this),
       error: (e) => {
         this.resetNav();
@@ -111,41 +109,34 @@ export class AppComponent {
       if (summary.length > 40) {
         summary = summary.substring(0, 40) + '...';
       }
-      if (this.getVideo) {
-        if (!post.body) continue;
-        if (
-          post.body.includes('figure') &&
-          post.body.includes('youtube') &&
-          post.body.search(this.YOUTUBE_REGEX) !== -1
-        ) {
-          const embedID = post.body.match(this.YOUTUBE_REGEX)![0];
-          this.posts.push(
-            new ParsedPost(
-              post.post_url,
-              `https://img.youtube.com/vi/${embedID}/0.jpg`,
-              summary
-            )
-          );
-        } else if (
-          post.body.includes('figure') &&
-          post.body.includes('</video>') &&
-          post.body.search(this.TUMBLR_REGEX) !== -1
-        ) {
-          const metadata: ApiTumblrVideoMetadata = JSON.parse(
-            post.body.match(this.TUMBLR_REGEX)![0]
-          );
-          new ParsedPost(post.post_url, metadata.poster[0].url, summary);
+      if (this.getVideo && post.content[0].type === 'video') {
+        switch (post.content[0].provider) {
+          case 'youtube': {
+            const id = post.content[0].metadata!.id;
+            this.posts.push(
+              new ParsedPost(
+                post.post_url,
+                `https://img.youtube.com/vi/${id}/0.jpg`,
+                summary
+              )
+            );
+            break;
+          }
         }
-      } else {
-        if (post.photos) {
+        if (post.content[0].media) {
           this.posts.push(
             new ParsedPost(
               post.post_url,
-              post.photos[0].alt_sizes[2].url,
+              post.content[0].poster![0].url,
               summary
             )
           );
         }
+      }
+      if (!this.getVideo && post.content[0].type === 'image') {
+        this.posts.push(
+          new ParsedPost(post.post_url, post.content[0].media![0].url, summary)
+        );
       }
       if (this.posts.length === this.requestedPosts) {
         break;

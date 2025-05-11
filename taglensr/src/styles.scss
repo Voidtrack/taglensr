@@ -9,7 +9,8 @@
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 $taglensr-theme: mat.define-theme((
   color: (
@@ -30,7 +31,9 @@ $taglensr-theme: mat.define-theme((
 
 html, body, mat-sidenav-container { 
   @include mat.all-component-themes($taglensr-theme);
-  height: 100%; 
+  & {
+    height: 100%; 
+  }
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 mat-card, footer {

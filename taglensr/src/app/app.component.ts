@@ -16,7 +16,6 @@ import { TumblrService } from './services/tumblr.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [
     MatSidenavContainer,
     MatCardModule,

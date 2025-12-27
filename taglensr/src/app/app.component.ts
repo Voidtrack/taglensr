@@ -11,7 +11,12 @@ import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ApiResponse, ParsedPost } from './models/post';
+import {
+  ApiPost,
+  BlogApiResponse,
+  ParsedPost,
+  PostApiResponse,
+} from './models/post';
 import { TumblrService } from './services/tumblr.service';
 
 @Component({
@@ -44,7 +49,7 @@ export class AppComponent {
   requestedPosts = 5;
   getVideo = false;
   pendingSearch = true;
-  tag = '';
+  target = '';
   requestsMade = 0;
 
   constructor(private tuServe: TumblrService) {}
@@ -63,8 +68,7 @@ export class AppComponent {
   }
 
   search() {
-    this.tag = this.tag.replace('#', '');
-    if (this.tag.length === 0) {
+    if (this.target.length === 0) {
       return;
     }
     this.posts = [];
@@ -76,75 +80,92 @@ export class AppComponent {
 
   loadPosts(date: Date = new Date(this.selectedDate)) {
     this.requestsMade += 1;
-    this.tuServe.getTaggedPosts(this.tag, date).subscribe({
-      next: this.parsePosts.bind(this),
-      error: (e) => {
-        this.resetNav();
-        this.displayErrorSnack(
-          `We got an error from Tumblr's API! Code: ${Number(
-            e.status
-          )}. Please drop us an issue!`
-        );
-        console.error(e);
-        this.loading = false;
-      },
-    });
+    if (this.target.includes('@')) {
+      this.tuServe
+        .getBlogPosts(
+          this.target.replace('@', ''),
+          this.getVideo ? 'video' : 'photo',
+          date
+        )
+        .subscribe({
+          next: this.parseBlogResponse.bind(this),
+          error: (e) => {
+            this.resetNav();
+            this.displayErrorSnack(
+              `We got an error from Tumblr's API when looking for posts! Code: ${Number(
+                e.status
+              )}. Please drop us an issue!`
+            );
+            console.error(e);
+            this.loading = false;
+          },
+        });
+    } else {
+      this.tuServe
+        .getTaggedPosts(this.target.replace('#', ''), date)
+        .subscribe({
+          next: this.parsePostResponse.bind(this),
+          error: (e) => {
+            this.resetNav();
+            this.displayErrorSnack(
+              `We got an error from Tumblr's API when looking for posts! Code: ${Number(
+                e.status
+              )}. Please drop us an issue!`
+            );
+            console.error(e);
+            this.loading = false;
+          },
+        });
+    }
   }
 
   private displayErrorSnack(errorText: string) {
     this._snackBar.open(`⚠️ ${errorText}`, 'Dismiss');
   }
 
-  private parsePosts(posts: ApiResponse) {
-    if (posts.response.length === 0) {
+  private parseBlogResponse(response: BlogApiResponse) {
+    if (response.response.posts.length === 0) {
       this.displayErrorSnack('No more posts found');
       this.loading = false;
       this.resetNav();
       return;
     }
+    this.parsePosts(response.response.posts);
+  }
 
-    for (const post of posts.response) {
-      let summary = post.summary;
-      if (summary.length > 40) {
-        summary = summary.substring(0, 40) + '...';
-      }
-      if (this.getVideo && post.content[0].type === 'video') {
-        switch (post.content[0].provider) {
-          case 'youtube': {
-            const id = post.content[0].metadata!.id;
-            this.posts.push(
-              new ParsedPost(
-                post.post_url,
-                `https://img.youtube.com/vi/${id}/0.jpg`,
-                summary
-              )
-            );
-            break;
-          }
-        }
-        if (post.content[0].media) {
-          this.posts.push(
-            new ParsedPost(
-              post.post_url,
-              post.content[0].poster![0].url,
-              summary
-            )
-          );
-        }
-      }
-      if (!this.getVideo && post.content[0].type === 'image') {
-        this.posts.push(
-          new ParsedPost(post.post_url, post.content[0].media![0].url, summary)
-        );
+  private parsePostResponse(response: PostApiResponse) {
+    if (response.response.length === 0) {
+      this.displayErrorSnack('No more posts found');
+      this.loading = false;
+      this.resetNav();
+      return;
+    }
+    this.parsePosts(response.response);
+  }
+
+  private parsePosts(posts: ApiPost[]) {
+    let updatedDate: Date | null = null;
+    for (const post of posts) {
+      if (post.content.length === 0) {
+        //Posts without content are reblogs
+        this.parsePost({
+          post_url: post.post_url,
+          parent_post_url: '',
+          summary: '🔁 ' + post.summary,
+          timestamp: post.timestamp,
+          content: post.trail[0].content,
+          trail: [],
+        });
+      } else {
+        this.parsePost(post);
       }
       if (this.posts.length === this.requestedPosts) {
+        updatedDate = this.updateLocalTimestamp(post.timestamp);
         break;
       }
     }
-    const updatedDate = new Date(posts.response.pop()!.timestamp);
-    this.internalDate = new Date(posts.response.pop()!.timestamp * 1000)
-      .toISOString()
-      .split('T')[0];
+    if (!updatedDate)
+      updatedDate = this.updateLocalTimestamp(posts.pop()!.timestamp);
     if (this.posts.length < this.requestedPosts) {
       if (this.requestsMade < this.REQUEST_LIMIT * this.requestedPosts) {
         this.loadPosts(updatedDate);
@@ -156,5 +177,42 @@ export class AppComponent {
       this.resetNav();
     }
     this.loading = false;
+  }
+
+  private parsePost(post: ApiPost) {
+    let summary = post.summary;
+    if (summary.length > 40) {
+      summary = summary.substring(0, 40) + '...';
+    }
+    if (this.getVideo && post.content[0].type === 'video') {
+      switch (post.content[0].provider) {
+        case 'youtube': {
+          const id = post.content[0].metadata!.id;
+          this.posts.push(
+            new ParsedPost(
+              post.post_url,
+              `https://img.youtube.com/vi/${id}/0.jpg`,
+              summary
+            )
+          );
+          break;
+        }
+      }
+      if (post.content[0].media) {
+        this.posts.push(
+          new ParsedPost(post.post_url, post.content[0].poster![0].url, summary)
+        );
+      }
+    }
+    if (!this.getVideo && post.content[0].type === 'image') {
+      this.posts.push(
+        new ParsedPost(post.post_url, post.content[0].media![0].url, summary)
+      );
+    }
+  }
+
+  private updateLocalTimestamp(timestamp: number): Date {
+    this.internalDate = new Date(timestamp * 1000).toISOString().split('T')[0];
+    return new Date(timestamp);
   }
 }

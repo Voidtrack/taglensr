@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ApiResponse } from '../models/post';
+import { BlogApiResponse, PostApiResponse } from '../models/post';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +19,29 @@ export class TumblrService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getTaggedPosts(tag: string, date: Date): Observable<ApiResponse> {
-    const timestamp =
-      date.getTime() > 9999999999
-        ? Math.floor(date.getTime() / 1000)
-        : date.getTime();
-    return this.httpClient.get<ApiResponse>(
-      `${this.baseUrl}/v2/tagged?api_key=${this.apiKey}&tag=${tag}&before=${timestamp}&npf=true`
+  private buildTimestamp(date: Date): number {
+    return date.getTime() > 9999999999
+      ? Math.floor(date.getTime() / 1000)
+      : date.getTime();
+  }
+
+  getTaggedPosts(tag: string, date: Date): Observable<PostApiResponse> {
+    return this.httpClient.get<PostApiResponse>(
+      `${this.baseUrl}/v2/tagged?api_key=${
+        this.apiKey
+      }&tag=${tag}&before=${this.buildTimestamp(date)}&npf=true`
+    );
+  }
+
+  getBlogPosts(
+    blog: string,
+    type: string,
+    date: Date
+  ): Observable<BlogApiResponse> {
+    return this.httpClient.get<BlogApiResponse>(
+      `${this.baseUrl}/v2/blog/${blog}/posts/${type}?api_key=${
+        this.apiKey
+      }&before=${this.buildTimestamp(date)}&npf=true`
     );
   }
 }

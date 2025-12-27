@@ -14,29 +14,31 @@
    /_/  \__,_/\__, /_____/\___/_/ /_/____/_/     
              /____/</code>
             </pre>
-        <h1 class="text-xl">A small, advanced search page for Tumblr tags -- Peer into tag history!</h1>
+        <h1 class="text-xl">A small, advanced search page for Tumblr tags and blogs -- Peer into history!</h1>
         <section class="flex flex-col flex-wrap justify-center items-center gap-5">
             <section class="flex flex-wrap justify-center items-center gap-4">
                 <mat-form-field subscriptSizing="dynamic">
-                    <mat-label>Search tag</mat-label>
+                    <mat-label>Search tag or blog</mat-label>
                     <mat-icon matIconPrefix aria-hidden="true" fontIcon="search" />
-                    <input matInput required="true" type="text" placeholder="#cats" [(ngModel)]="tag" [value]="tag" (input)="resetNav()">
+                    <input matInput required="true" type="text" placeholder="#cats/@tumblr" [(ngModel)]="target"
+                        [value]="target" (input)="resetNav()">
                 </mat-form-field>
-                <mat-form-field subscriptSizing="dynamic" >
+                <mat-form-field subscriptSizing="dynamic">
                     <mat-label>Search before</mat-label>
                     <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate" (input)="resetNav()">
                 </mat-form-field>
             </section>
-            <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo" (input)="resetNav()">
+            <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo"
+                (input)="resetNav()">
                 <mat-button-toggle [value]="false" aria-label="Get images">
                     @if (getVideo) {
-                        <mat-icon aria-hidden="true" fontIcon="image"/>
+                    <mat-icon aria-hidden="true" fontIcon="image" />
                     }
                     Images
                 </mat-button-toggle>
                 <mat-button-toggle [value]="true">
                     @if (!getVideo) {
-                        <mat-icon aria-hidden="true" fontIcon="movie"/>
+                    <mat-icon aria-hidden="true" fontIcon="movie" />
                     }
                     Videos
                 </mat-button-toggle>
@@ -44,7 +46,8 @@
             <section class="flex flex-col flex-wrap justify-center items-center gap-4">
                 <p>Number of posts</p>
                 <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
-                    <input matSliderThumb aria-label="Number of posts" [(ngModel)] = "requestedPosts" [value]="requestedPosts" (input)="resetNav()">
+                    <input matSliderThumb aria-label="Number of posts" [(ngModel)]="requestedPosts"
+                        [value]="requestedPosts" (input)="resetNav()">
                 </mat-slider>
                 <button mat-flat-button color="primary" (click)="search()">
                     <mat-icon aria-hidden="true" fontIcon="search" />
@@ -52,43 +55,46 @@
                 </button>
             </section>
         </section>
-    
+
         <section class="columns-xs px-16 w-full">
             @for (post of posts; track $index) {
             <mat-card (click)="this.openPost(post.link)" role="button" class="my-4 break-inside-avoid-column">
-                    <img mat-card-image [src]="post.photo" />
-                    @if (post.summary.length !== 0) {
-                        <mat-card-content>
-                            <p>{{post.summary}}</p>
-                        </mat-card-content>
-                    }
-                </mat-card> 
+                <img mat-card-image [src]="post.photo" />
+                @if (post.summary.length !== 0) {
+                <mat-card-content>
+                    <p>{{post.summary}}</p>
+                </mat-card-content>
+                }
+            </mat-card>
             }
         </section>
         @if (this.loading) {
-            <mat-spinner/>
-            <p>Going back to {{this.internalDate}} for your posts...</p>
-            @if (this.requestsMade > ((this.REQUEST_LIMIT * this.requestedPosts) / 2)) {
-                <p>We're going back further than expected</p>
-            }
+        <mat-spinner />
+        <p>Going back to {{this.internalDate}} for your posts...</p>
+        @if (this.requestsMade > ((this.REQUEST_LIMIT * this.requestedPosts) / 2)) {
+        <p>We're going back further than expected</p>
+        }
         }
         @if (!this.loading && !this.pendingSearch) {
-            <button mat-flat-button color="primary" (click)="backInTime()">
-                <mat-icon aria-hidden="true" fontIcon="arrow_forward" />
-                Next
-            </button>
+        <button mat-flat-button color="primary" (click)="backInTime()">
+            <mat-icon aria-hidden="true" fontIcon="arrow_forward" />
+            Next
+        </button>
         }
     </section>
     <footer class="fixed w-full bottom-0 flex justify-center items-center gap-4">
         <p>Made with</p>
         <img matTooltip="Angular" src="assets/icon_angular.png" class="h-9 w-9" alt="Angular framework logo" />
         <p>and</p>
-        <img matTooltip="Angular Material" src="https://angular.io/generated/images/marketing/concept-icons/material.svg" class="h-7 w-7" alt="Angular Material logo" />
+        <img matTooltip="Angular Material"
+            src="https://angular.io/generated/images/marketing/concept-icons/material.svg" class="h-7 w-7"
+            alt="Angular Material logo" />
         <p>by</p>
-        <img matTooltip="Voidtrack" src="favicon.png" alt="Voidtrack logo" class="h-8 w-8"/>
-        <p>in 2024</p>
+        <img matTooltip="Voidtrack" src="favicon.png" alt="Voidtrack logo" class="h-8 w-8" />
+        <p>in 2025</p>
         <p>|</p>
         <p>Hosted on</p>
-        <img matTooltip="GitHub" src="assets/github-mark.svg" alt="GitHub logo" class="h-8 w-8" role="button" (click)="openPost('https://github.com/Voidtrack/taglensr')"/>
+        <img matTooltip="GitHub" src="assets/github-mark.svg" alt="GitHub logo" class="h-8 w-8" role="button"
+            (click)="openPost('https://github.com/Voidtrack/taglensr')" />
     </footer>
 </mat-sidenav-container>

@@ -28,13 +28,36 @@ export interface ApiPostContent {
   poster: ApiPostMedia[] | undefined;
 }
 
-export interface ApiPost {
-  post_url: string;
-  summary: string;
-  timestamp: number;
+export interface ApiPostTrail {
   content: ApiPostContent[];
 }
 
-export interface ApiResponse {
+export interface ApiPost {
+  post_url: string;
+  parent_post_url: string;
+  summary: string;
+  timestamp: number;
+  content: ApiPostContent[];
+  trail: ApiPostTrail[];
+}
+
+export interface ApiBlogDetails {
+  name: string;
+  title: string;
+  url: string;
+  total_posts: number;
+}
+
+export interface ApiBlog {
+  blog: ApiBlogDetails;
+  posts: ApiPost[];
+  total_posts: number;
+}
+
+export interface PostApiResponse {
   response: ApiPost[];
+}
+
+export interface BlogApiResponse {
+  response: ApiBlog;
 }

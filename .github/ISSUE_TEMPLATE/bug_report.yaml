@@ -1,0 +1,47 @@
+name: Bug Report
+description: Got an error or is something broken?
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Bug report
+        *Thanks for taking the time to fill out this bug report and helping improve TagLensr!*
+        Please try to fill out all fields to the best of your ability.
+  - type: checkboxes
+    id: statements
+    validations:
+      required: true
+    attributes:
+      label: Please tick all of the statements that apply to your report
+      options:
+        - label: I got a Tumblr API error popup message (write down the code below)
+        - label: Something on the site didn't work how I'd expect
+        - label: I have a console error (write it down below)
+        - label: I inspected the source code to troubleshoot the issue
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug and/or API error code
+      description: Clearly and concisely write up the problem. Also share any error codes you got
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Type in '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: extra-info
+    attributes:
+      label: Debug and extra info
+      description: Did you troubleshoot using the source code? Got something else that might help?
+    validations:
+      required: false

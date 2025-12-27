@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+        uses: actions/checkout@v6.0.1
+      - uses: actions/setup-node@v6.1.0
         with:
-          node-version: "20.x"
-      - uses: actions/cache@v4
+          node-version: "24.x"
+      - uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -28,7 +28,7 @@ jobs:
           npm run-script build
           cp dist/taglensr/browser/index.html dist/taglensr/browser/404.html
       - name: Deploy
-        uses: crazy-max/ghaction-github-pages@v4.0.0
+        uses: crazy-max/ghaction-github-pages@v4.2.0
         with:
           build_dir: taglensr/dist/taglensr/browser
           fqdn: taglensr.voidtrack.org

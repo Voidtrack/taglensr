@@ -101,6 +101,8 @@ export class AppComponent {
           },
         });
     } else {
+      if (!this.target.includes('#'))
+        this.displayErrorSnack("Query doesn't have a # or @. Assuming #");
       this.tuServe
         .getTaggedPosts(this.target.replace('#', ''), date)
         .subscribe({

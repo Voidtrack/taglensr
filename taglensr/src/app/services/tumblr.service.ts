@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { BlogApiResponse, PostApiResponse } from '../models/post';
+import { BlogApiResponse, PostApiResponse, PostType } from '../models/post';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +35,7 @@ export class TumblrService {
 
   getBlogPosts(
     blog: string,
-    type: string,
+    type: PostType,
     date: Date
   ): Observable<BlogApiResponse> {
     return this.httpClient.get<BlogApiResponse>(

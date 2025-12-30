@@ -1,3 +1,15 @@
+export enum PostType {
+  all = '',
+  text = 'text',
+  quote = 'quote',
+  link = 'link',
+  answer = 'answer',
+  video = 'video',
+  audio = 'audio',
+  photo = 'photo',
+  poll = 'poll',
+}
+
 export class ParsedPost {
   link: string;
   photo: string;
@@ -8,6 +20,11 @@ export class ParsedPost {
     this.photo = photo;
     this.summary = summary;
   }
+}
+
+export interface PostParserOutput {
+  posts: ParsedPost[];
+  newTimestamp: number;
 }
 
 export interface ApiPostMedia {
@@ -35,6 +52,7 @@ export interface ApiPostTrail {
 export interface ApiPost {
   post_url: string;
   parent_post_url: string;
+  original_type: string;
   summary: string;
   timestamp: number;
   content: ApiPostContent[];
@@ -61,3 +79,10 @@ export interface PostApiResponse {
 export interface BlogApiResponse {
   response: ApiBlog;
 }
+
+export class InvalidPostTypeException {}
+
+export class NoValidMediaBlockFoundException {}
+
+export class NoValidVideoBlockFoundException {}
+export class UnknownVideoBlockFoundException {}

@@ -12,11 +12,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  ApiPost,
   BlogApiResponse,
   ParsedPost,
   PostApiResponse,
+  PostType,
 } from './models/post';
+import { ParserService } from './services/parser.service';
 import { TumblrService } from './services/tumblr.service';
 
 @Component({
@@ -38,21 +39,22 @@ import { TumblrService } from './services/tumblr.service';
 })
 export class AppComponent {
   // Specify max requests per post
-  readonly REQUEST_LIMIT = 12;
+  readonly REQUEST_LIMIT = 5;
 
   private _snackBar = inject(MatSnackBar);
+  PostType = PostType;
 
   posts: ParsedPost[] = [];
   loading = false;
   selectedDate = new Date().toISOString().split('T')[0];
   internalDate = this.selectedDate;
-  requestedPosts = 5;
-  getVideo = false;
+  requestedPostCount = 5;
+  filterType = PostType.all;
   pendingSearch = true;
   target = '';
   requestsMade = 0;
 
-  constructor(private tuServe: TumblrService) {}
+  constructor(private tuServe: TumblrService, private parser: ParserService) {}
 
   openPost(url: string) {
     window.open(url, '_blank');
@@ -80,13 +82,16 @@ export class AppComponent {
 
   loadPosts(date: Date = new Date(this.selectedDate)) {
     this.requestsMade += 1;
+    if (this.requestsMade >= this.REQUEST_LIMIT * this.requestedPostCount) {
+      this.displayErrorSnack(
+        "We had to stop the search because it used too many requests. Please drop us an issue and don't try again!"
+      );
+      this.resetNav();
+      this.loading = false;
+    }
     if (this.target.includes('@')) {
       this.tuServe
-        .getBlogPosts(
-          this.target.replace('@', ''),
-          this.getVideo ? 'video' : 'photo',
-          date
-        )
+        .getBlogPosts(this.target.replace('@', ''), this.filterType, date)
         .subscribe({
           next: this.parseBlogResponse.bind(this),
           error: (e) => {
@@ -132,7 +137,20 @@ export class AppComponent {
       this.resetNav();
       return;
     }
-    this.parsePosts(response.response.posts);
+    const parsedPosts = this.parser.parsePosts(
+      response.response.posts,
+      this.filterType,
+      this.requestedPostCount
+    );
+    this.posts.push(...parsedPosts.posts);
+    const updatedTimestamp = this.updateLocalTimestamp(
+      parsedPosts.newTimestamp
+    );
+    if (this.posts.length === this.requestedPostCount) {
+      this.loading = false;
+    } else {
+      this.loadPosts(updatedTimestamp);
+    }
   }
 
   private parsePostResponse(response: PostApiResponse) {
@@ -142,74 +160,19 @@ export class AppComponent {
       this.resetNav();
       return;
     }
-    this.parsePosts(response.response);
-  }
-
-  private parsePosts(posts: ApiPost[]) {
-    let updatedDate: Date | null = null;
-    for (const post of posts) {
-      if (post.content.length === 0) {
-        //Posts without content are reblogs
-        this.parsePost({
-          post_url: post.post_url,
-          parent_post_url: '',
-          summary: '🔁 ' + post.summary,
-          timestamp: post.timestamp,
-          content: post.trail[0].content,
-          trail: [],
-        });
-      } else {
-        this.parsePost(post);
-      }
-      if (this.posts.length === this.requestedPosts) {
-        updatedDate = this.updateLocalTimestamp(post.timestamp);
-        break;
-      }
-    }
-    if (!updatedDate)
-      updatedDate = this.updateLocalTimestamp(posts.pop()!.timestamp);
-    if (this.posts.length < this.requestedPosts) {
-      if (this.requestsMade < this.REQUEST_LIMIT * this.requestedPosts) {
-        this.loadPosts(updatedDate);
-        return;
-      }
-      this.displayErrorSnack(
-        "We had to stop the search because it used too many requests. Please drop us an issue and don't try again!"
-      );
-      this.resetNav();
-    }
-    this.loading = false;
-  }
-
-  private parsePost(post: ApiPost) {
-    let summary = post.summary;
-    if (summary.length > 40) {
-      summary = summary.substring(0, 40) + '...';
-    }
-    if (this.getVideo && post.content[0].type === 'video') {
-      switch (post.content[0].provider) {
-        case 'youtube': {
-          const id = post.content[0].metadata!.id;
-          this.posts.push(
-            new ParsedPost(
-              post.post_url,
-              `https://img.youtube.com/vi/${id}/0.jpg`,
-              summary
-            )
-          );
-          break;
-        }
-      }
-      if (post.content[0].media) {
-        this.posts.push(
-          new ParsedPost(post.post_url, post.content[0].poster![0].url, summary)
-        );
-      }
-    }
-    if (!this.getVideo && post.content[0].type === 'image') {
-      this.posts.push(
-        new ParsedPost(post.post_url, post.content[0].media![0].url, summary)
-      );
+    const parsedPosts = this.parser.parsePosts(
+      response.response,
+      this.filterType,
+      this.requestedPostCount
+    );
+    this.posts.push(...parsedPosts.posts);
+    const updatedTimestamp = this.updateLocalTimestamp(
+      parsedPosts.newTimestamp
+    );
+    if (this.posts.length === this.requestedPostCount) {
+      this.loading = false;
+    } else {
+      this.loadPosts(updatedTimestamp);
     }
   }
 

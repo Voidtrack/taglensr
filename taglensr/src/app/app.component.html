@@ -28,26 +28,62 @@
                     <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate" (input)="resetNav()">
                 </mat-form-field>
             </section>
-            <mat-button-toggle-group [(ngModel)]="getVideo" aria-label="Font Style" [value]="getVideo"
+            <mat-button-toggle-group [(ngModel)]="filterType" aria-label="Font Style" [value]="filterType"
                 (input)="resetNav()">
-                <mat-button-toggle [value]="false" aria-label="Get images">
-                    @if (getVideo) {
+                <mat-button-toggle [value]="PostType.all" aria-label="Get all posts">
+                    @if (filterType !== PostType.all) {
+                    <mat-icon aria-hidden="true" fontIcon="all_inclusive" />
+                    }
+                    All
+                </mat-button-toggle>
+                <mat-button-toggle [value]="PostType.photo" aria-label="Get images">
+                    @if (filterType !== PostType.photo) {
                     <mat-icon aria-hidden="true" fontIcon="image" />
                     }
                     Images
                 </mat-button-toggle>
-                <mat-button-toggle [value]="true">
-                    @if (!getVideo) {
+                <mat-button-toggle [value]="PostType.video" aria-label="Get videos">
+                    @if (filterType !== PostType.video) {
                     <mat-icon aria-hidden="true" fontIcon="movie" />
                     }
                     Videos
+                </mat-button-toggle>
+                <mat-button-toggle [value]="PostType.answer" aria-label="Get asks">
+                    @if (filterType !== PostType.answer) {
+                    <mat-icon aria-hidden="true" fontIcon="help" />
+                    }
+                    Asks
+                </mat-button-toggle>
+                <mat-button-toggle [value]="PostType.quote" aria-label="Get quote posts">
+                    @if (filterType !== PostType.quote) {
+                    <mat-icon aria-hidden="true" fontIcon="format_quote" />
+                    }
+                    Quote
+                </mat-button-toggle>
+                <mat-button-toggle [value]="PostType.link" aria-label="Get link posts">
+                    @if (filterType !== PostType.link) {
+                    <mat-icon aria-hidden="true" fontIcon="link" />
+                    }
+                    Link
+                </mat-button-toggle>
+                <mat-button-toggle [value]="PostType.text" aria-label="Get text posts">
+                    @if (filterType !== PostType.text) {
+                    <mat-icon aria-hidden="true" fontIcon="text_fields" />
+                    }
+                    Text
+                </mat-button-toggle>
+                <mat-button-toggle [value]="PostType.audio" aria-label="Get audios">
+                    @if (filterType !== PostType.audio) {
+                    <mat-icon aria-hidden="true" fontIcon="music_note" />
+                    }
+                    Audio
                 </mat-button-toggle>
             </mat-button-toggle-group>
             <section class="flex flex-col flex-wrap justify-center items-center gap-4">
                 <p>Number of posts</p>
                 <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
-                    <input matSliderThumb aria-label="Number of posts" [(ngModel)]="requestedPosts"
-                        [value]="requestedPosts" (input)="resetNav()">
+                    <input matSliderThumb aria-label="Number of posts" [(ngModel)]="requestedPostCount"
+                        [value]="requestedPostCount" (input)="resetNav()">
                 </mat-slider>
                 <button mat-flat-button color="primary" (click)="search()">
                     <mat-icon aria-hidden="true" fontIcon="search" />
@@ -71,7 +107,7 @@
         @if (this.loading) {
         <mat-spinner />
         <p>Going back to {{this.internalDate}} for your posts...</p>
-        @if (this.requestsMade > ((this.REQUEST_LIMIT * this.requestedPosts) / 2)) {
+        @if (this.requestsMade > ((this.REQUEST_LIMIT * this.requestedPostCount) / 2)) {
         <p>We're going back further than expected</p>
         }
         }

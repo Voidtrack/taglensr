@@ -1,22 +1,31 @@
 <mat-sidenav-container>
+    <section class="info mb-4 flex justify-center items-center gap-4">
+        <p class="hidden sm:block">Made with</p>
+        <img matTooltip="Angular" src="assets/icon_angular.png" class="h-9 w-9 hidden sm:block"
+            alt="Angular framework logo" />
+        <p class="hidden sm:block">and</p>
+        <img matTooltip="Angular Material"
+            src="https://angular.io/generated/images/marketing/concept-icons/material.svg"
+            class="h-7 w-7 hidden sm:block" alt="Angular Material logo" />
+        <p>by</p>
+        <img matTooltip="Voidtrack" src="favicon.png" alt="Voidtrack logo" class="h-8 w-8" />
+        <p>in 2025</p>
+        <p>|</p>
+        <p>Hosted on</p>
+        <img matTooltip="GitHub" src="assets/github-mark.svg" alt="GitHub logo" class="h-8 w-8" role="button"
+            (click)="openPost('https://github.com/Voidtrack/taglensr')" />
+    </section>
     <header class="w-full flex justify-center items-center gap-4">
-        <p>🔍⏳😕</p>
-        <p>Tumblr has a known bug in their API that prevents some posts from being shown</p>
+        <mat-icon class="hidden sm:block" fontIcon="info" />
+        <p>Tumblr has a known bug in their tag API that prevents some posts from being shown</p>
         <a href="https://github.com/tumblr/docs/issues/136" target="_blank">GitHub issue</a>
     </header>
-    <section class="flex flex-col flex-wrap justify-center items-center gap-4 mb-12">
-        <pre>
-<code aria-hidden="true" >
-     ______            __                        
-    /_  __/___ _____ _/ /   ___  ____  __________
-     / / / __ `/ __ `/ /   / _ \/ __ \/ ___/ ___/
-    / / / /_/ / /_/ / /___/  __/ / / (__  ) /    
-   /_/  \__,_/\__, /_____/\___/_/ /_/____/_/     
-             /____/</code>
-            </pre>
-        <h1 class="text-xl">A small, advanced search page for Tumblr tags and blogs -- Peer into history!</h1>
+    <section class="flex w-full flex-col flex-wrap justify-center items-center gap-4 mb-12">
+        <img src="assets/logo.svg" class="mt-6 w-11/12 md:w-auto md:h-28" />
+        <h1 class="md:text-xl">A small, advanced search page for Tumblr tags and blogs -- Peer into history!
+        </h1>
         <section class="flex flex-col flex-wrap justify-center items-center gap-5">
-            <section class="flex flex-wrap justify-center items-center gap-4">
+            <section class="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4">
                 <mat-form-field subscriptSizing="dynamic">
                     <mat-label>Search tag or blog</mat-label>
                     <mat-icon matIconPrefix aria-hidden="true" fontIcon="search" />
@@ -28,60 +37,10 @@
                     <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate" (input)="resetNav()">
                 </mat-form-field>
             </section>
-            <mat-button-toggle-group [(ngModel)]="filterType" aria-label="Font Style" [value]="filterType"
-                (input)="resetNav()">
-                <mat-button-toggle [value]="PostType.all" aria-label="Get all posts">
-                    @if (filterType !== PostType.all) {
-                    <mat-icon aria-hidden="true" fontIcon="all_inclusive" />
-                    }
-                    All
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.photo" aria-label="Get images">
-                    @if (filterType !== PostType.photo) {
-                    <mat-icon aria-hidden="true" fontIcon="image" />
-                    }
-                    Images
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.video" aria-label="Get videos">
-                    @if (filterType !== PostType.video) {
-                    <mat-icon aria-hidden="true" fontIcon="movie" />
-                    }
-                    Videos
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.answer" aria-label="Get asks">
-                    @if (filterType !== PostType.answer) {
-                    <mat-icon aria-hidden="true" fontIcon="help" />
-                    }
-                    Asks
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.quote" aria-label="Get quote posts">
-                    @if (filterType !== PostType.quote) {
-                    <mat-icon aria-hidden="true" fontIcon="format_quote" />
-                    }
-                    Quote
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.link" aria-label="Get link posts">
-                    @if (filterType !== PostType.link) {
-                    <mat-icon aria-hidden="true" fontIcon="link" />
-                    }
-                    Link
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.text" aria-label="Get text posts">
-                    @if (filterType !== PostType.text) {
-                    <mat-icon aria-hidden="true" fontIcon="text_fields" />
-                    }
-                    Text
-                </mat-button-toggle>
-                <mat-button-toggle [value]="PostType.audio" aria-label="Get audios">
-                    @if (filterType !== PostType.audio) {
-                    <mat-icon aria-hidden="true" fontIcon="music_note" />
-                    }
-                    Audio
-                </mat-button-toggle>
-            </mat-button-toggle-group>
+            <app-type-select (type)="filterType = $event" (input)="resetNav()" />
             <section class="flex flex-col flex-wrap justify-center items-center gap-4">
                 <p>Number of posts</p>
-                <mat-slider class="w-96" min="1" max="20" step="1" showTickMarks discrete>
+                <mat-slider class="w-72 md:w-96" min="1" max="20" step="1" showTickMarks discrete>
                     <input matSliderThumb aria-label="Number of posts" [(ngModel)]="requestedPostCount"
                         [value]="requestedPostCount" (input)="resetNav()">
                 </mat-slider>
@@ -118,19 +77,4 @@
         </button>
         }
     </section>
-    <footer class="fixed w-full bottom-0 flex justify-center items-center gap-4">
-        <p>Made with</p>
-        <img matTooltip="Angular" src="assets/icon_angular.png" class="h-9 w-9" alt="Angular framework logo" />
-        <p>and</p>
-        <img matTooltip="Angular Material"
-            src="https://angular.io/generated/images/marketing/concept-icons/material.svg" class="h-7 w-7"
-            alt="Angular Material logo" />
-        <p>by</p>
-        <img matTooltip="Voidtrack" src="favicon.png" alt="Voidtrack logo" class="h-8 w-8" />
-        <p>in 2025</p>
-        <p>|</p>
-        <p>Hosted on</p>
-        <img matTooltip="GitHub" src="assets/github-mark.svg" alt="GitHub logo" class="h-8 w-8" role="button"
-            (click)="openPost('https://github.com/Voidtrack/taglensr')" />
-    </footer>
 </mat-sidenav-container>

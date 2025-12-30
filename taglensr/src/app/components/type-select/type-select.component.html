@@ -1,0 +1,69 @@
+<section class="flex flex-col flex-wrap justify-center items-center">
+    <mat-button-toggle-group class="hidden md:inline-flex" [(ngModel)]="filterType" aria-label="Post type selector"
+        (change)="update()">
+        <mat-button-toggle [value]="PostType.all" aria-label="Get all posts">
+            @if (filterType !== PostType.all) {
+            <mat-icon aria-hidden="true" fontIcon="all_inclusive" />
+            }
+            All
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.photo" aria-label="Get images">
+            @if (filterType !== PostType.photo) {
+            <mat-icon aria-hidden="true" fontIcon="image" />
+            }
+            Images
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.video" aria-label="Get videos">
+            @if (filterType !== PostType.video) {
+            <mat-icon aria-hidden="true" fontIcon="movie" />
+            }
+            Videos
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.answer" aria-label="Get asks">
+            @if (filterType !== PostType.answer) {
+            <mat-icon aria-hidden="true" fontIcon="help" />
+            }
+            Asks
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.quote" aria-label="Get quote posts">
+            @if (filterType !== PostType.quote) {
+            <mat-icon aria-hidden="true" fontIcon="format_quote" />
+            }
+            Quote
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.link" aria-label="Get link posts">
+            @if (filterType !== PostType.link) {
+            <mat-icon aria-hidden="true" fontIcon="link" />
+            }
+            Link
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.text" aria-label="Get text posts">
+            @if (filterType !== PostType.text) {
+            <mat-icon aria-hidden="true" fontIcon="text_fields" />
+            }
+            Text
+        </mat-button-toggle>
+        <mat-button-toggle [value]="PostType.audio" aria-label="Get audios">
+            @if (filterType !== PostType.audio) {
+            <mat-icon aria-hidden="true" fontIcon="music_note" />
+            }
+            Audio
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-form-field class="visible md:invisible" subscriptSizing="dynamic">
+        <mat-label>Post type</mat-label>
+        <!-- <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate" (input)="resetNav()"> -->
+        <mat-select [(value)]="filterType" (valueChange)="update()">
+            <mat-option [value]="PostType.all"><mat-icon aria-hidden="true" fontIcon="all_inclusive" /> All</mat-option>
+            <mat-option [value]="PostType.photo"><mat-icon aria-hidden="true" fontIcon="image" /> Images</mat-option>
+            <mat-option [value]="PostType.video"><mat-icon aria-hidden="true" fontIcon="movie" /> Videos</mat-option>
+            <mat-option [value]="PostType.answer"><mat-icon aria-hidden="true" fontIcon="help" /> Asks</mat-option>
+            <mat-option [value]="PostType.quote"><mat-icon aria-hidden="true" fontIcon="format_quote" />
+                Quote</mat-option>
+            <mat-option [value]="PostType.link"><mat-icon aria-hidden="true" fontIcon="link" /> Link</mat-option>
+            <mat-option [value]="PostType.text"><mat-icon aria-hidden="true" fontIcon="text_fields" /> Text</mat-option>
+            <mat-option [value]="PostType.audio"><mat-icon aria-hidden="true" fontIcon="music_note" />
+                Audio</mat-option>
+        </mat-select>
+    </mat-form-field>
+</section>

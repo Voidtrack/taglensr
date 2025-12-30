@@ -11,6 +11,7 @@ import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TypeSelectComponent } from './components/type-select/type-select.component';
 import {
   BlogApiResponse,
   ParsedPost,
@@ -34,6 +35,7 @@ import { TumblrService } from './services/tumblr.service';
     MatSliderModule,
     MatTooltipModule,
     FormsModule,
+    TypeSelectComponent,
   ],
   templateUrl: './app.component.html',
 })
@@ -42,7 +44,6 @@ export class AppComponent {
   readonly REQUEST_LIMIT = 5;
 
   private _snackBar = inject(MatSnackBar);
-  PostType = PostType;
 
   posts: ParsedPost[] = [];
   loading = false;
@@ -127,7 +128,7 @@ export class AppComponent {
   }
 
   private displayErrorSnack(errorText: string) {
-    this._snackBar.open(`⚠️ ${errorText}`, 'Dismiss');
+    this._snackBar.open(errorText, 'Dismiss');
   }
 
   private parseBlogResponse(response: BlogApiResponse) {

@@ -50,9 +50,8 @@
             Audio
         </mat-button-toggle>
     </mat-button-toggle-group>
-    <mat-form-field class="visible md:invisible" subscriptSizing="dynamic">
+    <mat-form-field class="inline-flex md:hidden" subscriptSizing="dynamic">
         <mat-label>Post type</mat-label>
-        <!-- <input matInput type="date" [(ngModel)]="selectedDate" [value]="selectedDate" (input)="resetNav()"> -->
         <mat-select [(value)]="filterType" (valueChange)="update()">
             <mat-option [value]="PostType.all"><mat-icon aria-hidden="true" fontIcon="all_inclusive" /> All</mat-option>
             <mat-option [value]="PostType.photo"><mat-icon aria-hidden="true" fontIcon="image" /> Images</mat-option>

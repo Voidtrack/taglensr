@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="370"
+   height="82"
+   class="svgbob"
+   version="1.1"
+   id="svg60"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <style
+     id="style1">.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+    stroke: black;
+    stroke-width: 2;
+    stroke-opacity: 1;
+    fill-opacity: 1;
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+}
+.svgbob text {
+    white-space: pre;
+    fill: black;
+    font-family: Iosevka Fixed, monospace;
+    font-size: 14px;
+}
+.svgbob rect.backdrop {
+    stroke: none;
+    fill: white;
+}
+.svgbob .broken {
+    stroke-dasharray: 8;
+}
+.svgbob .filled {
+    fill: black;
+}
+.svgbob .bg_filled {
+    fill: white;
+    stroke-width: 1;
+}
+.svgbob .nofill {
+    fill: white;
+}
+.svgbob .end_marked_arrow {
+    marker-end: url(#arrow);
+}
+.svgbob .start_marked_arrow {
+    marker-start: url(#arrow);
+}
+.svgbob .end_marked_diamond {
+    marker-end: url(#diamond);
+}
+.svgbob .start_marked_diamond {
+    marker-start: url(#diamond);
+}
+.svgbob .end_marked_circle {
+    marker-end: url(#circle);
+}
+.svgbob .start_marked_circle {
+    marker-start: url(#circle);
+}
+.svgbob .end_marked_open_circle {
+    marker-end: url(#open_circle);
+}
+.svgbob .start_marked_open_circle {
+    marker-start: url(#open_circle);
+}
+.svgbob .end_marked_big_open_circle {
+    marker-end: url(#big_open_circle);
+}
+.svgbob .start_marked_big_open_circle {
+    marker-start: url(#big_open_circle);
+}<!--separator-->
+</style>
+  <defs
+     id="defs4" />
+  <text
+     x="91"
+     y="29"
+     id="text4"
+     style="fill:#ffffff;stroke:#ffffff">`</text>
+  <text
+     x="139"
+     y="29"
+     id="text5"
+     style="fill:#ffffff;stroke:#ffffff">`</text>
+  <line
+     x1="209"
+     y1="33"
+     x2="217"
+     y2="33"
+     class="solid"
+     id="line5"
+     style="fill:#ffffff;stroke:#ffffff" />
+  <text
+     x="67"
+     y="61"
+     id="text6"
+     style="fill:#ffffff;stroke:#ffffff">,</text>
+  <text
+     x="115"
+     y="61"
+     id="text7"
+     style="fill:#ffffff;stroke:#ffffff">,</text>
+  <g
+     id="g16"
+     style="fill:#ffffff;stroke:#ffffff"
+     transform="translate(-23,-15)">
+    <line
+       x1="40"
+       y1="16"
+       x2="88"
+       y2="16"
+       class="solid"
+       id="line7"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="40"
+       y1="16"
+       x2="32"
+       y2="32"
+       class="solid"
+       id="line8"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="32"
+       y1="32"
+       x2="48"
+       y2="32"
+       class="solid"
+       id="line9"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="88"
+       y1="16"
+       x2="64"
+       y2="64"
+       class="solid"
+       id="line10"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="48"
+       y1="32"
+       x2="24"
+       y2="80"
+       class="solid"
+       id="line11"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="64"
+       y1="64"
+       x2="72"
+       y2="80"
+       class="solid"
+       id="line12"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="72"
+       y1="80"
+       x2="88"
+       y2="80"
+       class="solid"
+       id="line13"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="64"
+       y1="32"
+       x2="112"
+       y2="32"
+       class="solid"
+       id="line14"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="64"
+       y1="32"
+       x2="40"
+       y2="80"
+       class="solid"
+       id="line15"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="24"
+       y1="80"
+       x2="40"
+       y2="80"
+       class="solid"
+       id="line16"
+       style="fill:#ffffff;stroke:#ffffff" />
+  </g>
+  <g
+     id="g47"
+     style="fill:#ffffff;stroke:#ffffff"
+     transform="translate(-23,-15)">
+    <line
+       x1="184"
+       y1="16"
+       x2="200"
+       y2="16"
+       class="solid"
+       id="line17"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="200"
+       y1="16"
+       x2="176"
+       y2="64"
+       class="solid"
+       id="line18"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="168"
+       y1="32"
+       x2="176"
+       y2="32"
+       class="solid"
+       id="line19"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="184"
+       y1="16"
+       x2="144"
+       y2="96"
+       class="solid"
+       id="line20"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="224"
+       y1="32"
+       x2="248"
+       y2="32"
+       class="solid"
+       id="line21"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="224"
+       y1="32"
+       x2="200"
+       y2="80"
+       class="solid"
+       id="line22"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="248"
+       y1="32"
+       x2="256"
+       y2="48"
+       class="solid"
+       id="line23"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="176"
+       y1="64"
+       x2="208"
+       y2="64"
+       class="solid"
+       id="line24"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="152"
+       y1="80"
+       x2="200"
+       y2="80"
+       class="solid"
+       id="line25"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="208"
+       y1="64"
+       x2="216"
+       y2="80"
+       class="solid"
+       id="line26"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="264"
+       y1="32"
+       x2="296"
+       y2="32"
+       class="solid"
+       id="line27"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="264"
+       y1="32"
+       x2="240"
+       y2="80"
+       class="solid"
+       id="line28"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="296"
+       y1="32"
+       x2="304"
+       y2="48"
+       class="solid"
+       id="line29"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="232"
+       y1="64"
+       x2="248"
+       y2="64"
+       class="solid"
+       id="line30"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="312"
+       y1="32"
+       x2="392"
+       y2="32"
+       class="solid"
+       id="line31"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="312"
+       y1="32"
+       x2="304"
+       y2="48"
+       class="solid"
+       id="line32"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <path
+       d="m 304,48 a 16,16 0 0 0 0,16"
+       class="nofill"
+       id="path32"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="304"
+       y1="64"
+       x2="320"
+       y2="64"
+       class="solid"
+       id="line33"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="272"
+       y1="48"
+       x2="288"
+       y2="48"
+       class="solid"
+       id="line34"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="272"
+       y1="48"
+       x2="256"
+       y2="80"
+       class="solid"
+       id="line35"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="288"
+       y1="48"
+       x2="272"
+       y2="80"
+       class="solid"
+       id="line36"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="216"
+       y1="80"
+       x2="256"
+       y2="80"
+       class="solid"
+       id="line37"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="320"
+       y1="48"
+       x2="344"
+       y2="48"
+       class="solid"
+       id="line38"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="352"
+       y1="32"
+       x2="344"
+       y2="48"
+       class="solid"
+       id="line39"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="360"
+       y1="48"
+       x2="384"
+       y2="48"
+       class="solid"
+       id="line40"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="392"
+       y1="32"
+       x2="384"
+       y2="48"
+       class="solid"
+       id="line41"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="360"
+       y1="48"
+       x2="344"
+       y2="80"
+       class="solid"
+       id="line42"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="272"
+       y1="80"
+       x2="344"
+       y2="80"
+       class="solid"
+       id="line43"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="296"
+       y1="64"
+       x2="288"
+       y2="80"
+       class="solid"
+       id="line44"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <path
+       d="m 336,48 a 16,16 0 0 1 0,16"
+       class="nofill"
+       id="path44"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="336"
+       y1="64"
+       x2="328"
+       y2="80"
+       class="solid"
+       id="line45"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="112"
+       y1="80"
+       x2="104"
+       y2="96"
+       class="solid"
+       id="line46"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="104"
+       y1="96"
+       x2="144"
+       y2="96"
+       class="solid"
+       id="line47"
+       style="fill:#ffffff;stroke:#ffffff" />
+  </g>
+  <g
+     id="g52"
+     style="fill:#ffffff;stroke:#ffffff"
+     transform="translate(-23,-15)">
+    <line
+       x1="120"
+       y1="32"
+       x2="160"
+       y2="32"
+       class="solid"
+       id="line48"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="128"
+       y1="32"
+       x2="104"
+       y2="80"
+       class="solid"
+       id="line49"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="96"
+       y1="80"
+       x2="104"
+       y2="80"
+       class="solid"
+       id="line50"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="112"
+       y1="64"
+       x2="120"
+       y2="80"
+       class="solid"
+       id="line51"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="120"
+       y1="80"
+       x2="136"
+       y2="80"
+       class="solid"
+       id="line52"
+       style="fill:#ffffff;stroke:#ffffff" />
+  </g>
+  <g
+     id="g56"
+     style="fill:#ffffff;stroke:#ffffff"
+     transform="translate(-23,-15)">
+    <line
+       x1="88"
+       y1="48"
+       x2="104"
+       y2="48"
+       class="solid"
+       id="line53"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="88"
+       y1="48"
+       x2="80"
+       y2="64"
+       class="solid"
+       id="line54"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="80"
+       y1="64"
+       x2="96"
+       y2="64"
+       class="solid"
+       id="line55"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="104"
+       y1="48"
+       x2="96"
+       y2="64"
+       class="solid"
+       id="line56"
+       style="fill:#ffffff;stroke:#ffffff" />
+  </g>
+  <g
+     id="g60"
+     style="fill:#ffffff;stroke:#ffffff"
+     transform="translate(-23,-15)">
+    <line
+       x1="136"
+       y1="48"
+       x2="152"
+       y2="48"
+       class="solid"
+       id="line57"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="136"
+       y1="48"
+       x2="128"
+       y2="64"
+       class="solid"
+       id="line58"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="128"
+       y1="64"
+       x2="144"
+       y2="64"
+       class="solid"
+       id="line59"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <line
+       x1="152"
+       y1="48"
+       x2="144"
+       y2="64"
+       class="solid"
+       id="line60"
+       style="fill:#ffffff;stroke:#ffffff" />
+  </g>
+</svg>
